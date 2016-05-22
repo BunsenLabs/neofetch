@@ -1,0 +1,23 @@
+Source: neofetch
+Section: utils
+Priority: optional
+Maintainer: Jens John <twoion@bunsenlabs.org>
+XSBC-Original-Maintainer: dawidd6 <dawidd0811@gmail.com>
+Build-Depends: debhelper (>=9)
+Standards-Version: 3.9.6
+Homepage: https://github.com/dylanaraps/neofetch
+
+Package: neofetch
+Architecture: all
+Depends: bash(>=3.0), libncurses5, libncurses5-dev, procps
+Suggests: w3m-img, imagemagick, cmus, feh, mpc, nitrogen, scrot, x11-utils
+Description: CLI script to show your system's info and display an image using w3m.
+ cmus: Current Song
+ feh: Wallpaper Display
+ imagemagick: Image cropping / Thumbnail creation
+ mpc: Current Song
+ nitrogen: Wallpaper Display
+ scrot: Take a screenshot
+ w3m: Display Images
+ x11-utils: Resolution Detection
+

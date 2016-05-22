@@ -1,0 +1,12 @@
+neofetch (1.7.0~bl1+b81dd3b-1) jessie-backports; urgency=medium
+
+  * Non-maintainer upload.
+  * Build for BL jessie-backports.
+
+ -- Jens John <dev@2ion.de>  Sun, 22 May 2016 11:53:56 +0200
+
+neofetch (1.7-1ubuntu1) xenial; urgency=medium
+
+  * Release 1.7
+
+ -- Dawid Dziurla <dawidd0811@gmail.com>  Thu, 28 Apr 2016 20:59:03 +0200
