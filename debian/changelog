@@ -1,3 +1,11 @@
+neofetch (1.7.0~bl3+fd7136e-1) jessie-backports; urgency=medium
+
+  * Non-maintainer upload.
+  * Import recent upstream changes.
+  * Build for BL jessie-backports.
+
+ -- Jens John <dev@2ion.de>  Sun, 19 Jun 2016 10:33:57 +0200
+
 neofetch (1.7.0~bl2+430abc5-1) jessie-backports; urgency=medium
 
   * Non-maintainer upload.
