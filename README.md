@@ -9,7 +9,7 @@ your distro's logo or any ascii art of your choice!
 Have a look at the wiki, I've updated/added some new pages!<br \>
 **https://github.com/dylanaraps/neofetch/wiki**
 
-![1](https://ipfs.pics/ipfs/QmRzqYduDQpxBLBj8WdsvvDS9ZAB89beHpCzCyAgsGTomx)
+![1](https://ipfs.pics/ipfs/QmTtF9Sx8o617QE88GH3Z4yX7mRyi4yS1hsMHyRVmn14vJ)
 
 
 <!-- Table of Contents {{{ -->
@@ -103,9 +103,9 @@ These dependencies can all be installed through Cydia.
 ### Optional dependencies:
 
 - Desktop Environment and Window Manager: `xprop` \[1\]
-- Displaying images: `w3m-img` \[2\] \[3\] or `iTerm2` \[4\]
+- Displaying images: `w3m-img` \[2\] \[3\] or `iTerm2` or `Terminology` \[4\]
 - Thumbnail creation: `imagemagick`
-- Displaying song information from Google Play Music Desktop Player: [`gpmdp`](https://github.com/iAndrewT/gpmdp-bash)
+- Displaying song information from Google Play Music Desktop Player: [`gpmdp-remote`](https://github.com/iAndrewT/gpmdp-remote)
 
 ##### Linux / BSD
 
@@ -130,8 +130,7 @@ These dependencies can all be installed through Cydia.
 \[3\] Image support only works in certain terminal emulators. The script will fallback to ascii mode on<br \>
 terminal emulators that don't support the xterm escape sequences we're using for image sizing.
 
-\[4\] You can enable the `iTerm2` image backend by using the launch flag `--image_backend iterm2` or by<br \>
-changing the config option `$image_backend` to `iterm2`.
+\[4\] Image support is built into Terminology and iTerm2, and doesn't require w3m-img.
 
 \[5\] Xrandr is prefered over xdpyinfo as Xrandr supports multi monitor and refresh rate display in the<br \>
 output.
@@ -174,15 +173,15 @@ https://github.com/dylanaraps/neofetch/wiki/Following-HEAD
 ### Gentoo / Funtoo
 
 1. Add the 3rd party repo
-    - `layman -o https://gist.githubusercontent.com/z1lt0id/24d45b15800b98975260/raw/2fdf6645cdc3c1ca0b0af83a7bf8f86598e386ae/fs0ciety.xml -f -a fs0ciety`
-2. Sync the repos
-    - `layman -S`
-3. To enable w3m and scrot support, enable the appropriate flags.
-    - `echo "x11-apps/neofetch" >> /etc/portage/package.use`
+    - `# wget https://git.io/vocNV -O /etc/portage/repos.conf/konimex.conf`
+2. Sync the repo
+    - `# emerge --sync konimex`
+3. To enable additional features such as w3m and music support, enable the appropriate USE flags. For example:
+    - `# echo "app-misc/neofetch X -moc" >> /etc/portage/package.use`
 4. Install the package
-    - `emerge -a x11-apps/neofetch`
+    - `# emerge -a app-misc/neofetch`
 
-There is also a git version available: `emerge --autounmask-write =x11-apps/neofetch-9999`
+To install the git version, just add `app-misc/neofetch ~<your architecture>` to `package.accept_keywords`
 
 
 ### CRUX
@@ -390,8 +389,6 @@ alias fetch2="fetch \
     --underline_char char       Character to use when underlining title
     --line_wrap on/off          Enable/Disable line wrapping
     --bold on/off               Enable/Disable bold text
-    --prompt_height num         Set this to your prompt height to fix issues with
-                                the text going off screen at the top
 
 
     Color Blocks:
@@ -408,23 +405,22 @@ alias fetch2="fetch \
     --progress_length num       Length in spaces to make the progress bars.
     --progress_colors num num   Colors to make the progress bar.
                                 Set in this order: elapsed, total
-    --cpu_display mode1 mode2   Which shorthand to use and how CPU usage should be printed
-                                mode1 takes: name, speed, tiny, on, off
-                                mode2 takes: info, bar, infobar, barinfo
-    --memory_display mode       Which way should the memory progress bar be added
-                                Takes bar, infobar, barinfo
-    --battery_display mode      Which way should the battery progress bar be added
-                                Takes bar, infobar, barinfo
-    --disk_display mode         Which way should the disk progress bar be added
-                                Takes bar, infobar, barinfo, perc
+    --cpu_display mode          Progress bar mode.
+                                Takes: bar, infobar, barinfo, off
+    --memory_display mode       Progress bar mode.
+                                Takes: bar, infobar, barinfo, off
+    --battery_display mode      Progress bar mode.
+                                Takes: bar, infobar, barinfo, off
+    --disk_display mode         Progress bar mode.
+                                Takes: bar, infobar, barinfo, off
 
 
     Image:
     --image type                Image source. Where and what image we display.
                                 Possible values: wall, ascii,
                                 /path/to/img, /path/to/dir/, off
-    --size 20px | --size 20%    Size to make the image, takes pixels or a percentage.
-    --image_position left/right Where to display the image: (Left/Right)
+    --size 00px | --size 00%    How to size the image.
+                                Possible values: auto, 00px, 00%, none
     --crop_mode mode            Which crop mode to use
                                 Takes the values: normal, fit, fill
     --crop_offset value         Change the crop offset for normal mode.
@@ -468,6 +464,11 @@ alias fetch2="fetch \
     --config /path/to/config    Specify a path to a custom config file
     --config none               Launch the script without a config file
     --help                      Print this text and exit
+    --version                   Show neofetch version
+    --test                      Launch the script with all functions / options enabled.
+                                This should only be used for testing purposes, ie Travis.CI.
+    -v                          Display error messages.
+    -vv                         Display a verbose log for error reporting.
 
 
 <!-- }}} -->
@@ -591,6 +592,9 @@ Thanks to:
 - [@mclado](https://github.com/mclado): Helping me with Max OS X testing
 - [@xDemonessx](https://github.com/xDemonessx): Helping me test the Windows version.
 - [@tudurom](https://github.com/tudurom): Helping me test **everything**.
+- [@iandrewt](https://github.com/iandrewt): OS X related bug fixes and features.
+- [@konimex](https://github.com/konimex): Packaging neofetch for a wide range of distros.
+- [@dawidd6](https://github.com/dawidd6): Packaging neofetch for Debian / Ubuntu.
 - Everyone else who has helped test the script, given feedback or reported bugs.
 
 

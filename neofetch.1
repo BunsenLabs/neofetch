@@ -1,4 +1,4 @@
-.TH NEOFETCH "1" "March 2016" "1.5" "User Commands"
+.TH NEOFETCH "1" "June 2016" "1.8" "User Commands"
 .SH NAME
 neofetch \- simple system information script
 
@@ -145,27 +145,25 @@ Colors to make the progress bar.
 .br
 Set in this order: elapsed, total
 .TP
-.B \--cpu_display 'mode1' 'mode2'
-Which shorthand to use and how CPU usage should be printed
+.B \--cpu_display       'mode'
+Progress bar mode.
 .br
-mode1 takes: name, speed, tiny, on, off
-.br
-mode2 takes: info, bar, infobar, barinfo
+Takes: bar, infobar, barinfo, off
 .TP
-.B \--memory_display 'mode'
-Which way should the memory progress bar be added
+.B \--memory_display    'mode'
+Progress bar mode.
 .br
-Takes: bar, infobar, barinfo
+Takes: bar, infobar, barinfo, off
 .TP
-.B \--battery_display 'mode'
-Which way should the battery progress bar be added
+.B \--battery_display   'mode'
+Progress bar mode.
 .br
-Takes: bar, infobar, barinfo
+Takes: bar, infobar, barinfo, off
 .TP
-.B \--disk_display mode
-Which way should the disk progress bar be added
+.B \--disk_display      'mode'
+Progress bar mode.
 .br
-Takes: bar, infobar, barinfo, perc
+Takes: bar, infobar, barinfo, off
 
 .SH IMAGE
 .TP
@@ -175,10 +173,9 @@ Image source. Where and what image we display.
 Possible values: wall, ascii, /path/to/img, /path/to/dir/, off
 .TP
 .B \--size 'size'
-Size to make the image, takes pixels or a percentage.
-.TP
-.B \--image_position 'left/right'
-Where to display the image: (Left/Right)
+How to size the image.
+.br
+Possible values: auto, 00px, 00%, none
 .TP
 .B \--crop_mode 'mode'
 Which crop mode to use
@@ -260,6 +257,9 @@ Launch the script without a config file
 .B \--test
 Launch the script with all functions / options enabled.
 This should only be used for testing purposes, ie Travis.CI.
+.TP
+.B \--version
+Show neofetch version.
 .TP
 .B \-v
 Display error messages.

@@ -29,18 +29,21 @@ printinfo () {
     info "WM Theme" wmtheme
     info "Theme" theme
     info "Icons" icons
-    info "Font" font
+    info "Terminal" term
+    info "Terminal Font" termfont
     info "CPU" cpu
     info "GPU" gpu
     info "Memory" memory
 
+    # info "CPU Usage" cpu_usage
     # info "Disk" disk
     # info "Battery" battery
+    # info "Font" font
+    # info "Song" song
     # info "Local IP" localip
     # info "Public IP" publicip
     # info "Users" users
     # info "Birthday" birthday
-    # info "Song" song
 
     info linebreak
     info cols
@@ -97,10 +100,14 @@ shell_version="off"
 # scaling_current, scaling_min, scaling_max
 speed_type="max"
 
-# CPU Display
-# Set shorthand setting and progress bar setting
-# --cpu_display (name, speed, tiny, on, off) (bar, infobar, barinfo, off)
+# CPU Shorthand
+# Set shorthand setting
+# --cpu_shorthand name, speed, tiny, on, off
 cpu_shorthand="off"
+
+# CPU Usage display
+# Set CPU usage display setting
+# --cpu_display bar, infobar, barinfo, off
 cpu_display="off"
 
 # CPU Cores
@@ -221,12 +228,6 @@ underline_enabled="on"
 # --underline_char char
 underline_char="-"
 
-# Prompt height
-# You should only have to change this if your
-# prompt is greater than 2 lines high.
-# --prompt_height num
-prompt_height=1
-
 
 # }}}
 
@@ -324,7 +325,7 @@ crop_offset="center"
 
 # Image size
 # The image is half the terminal width by default.
-# --size auto, 00px, 00%
+# --size auto, 00px, 00%, none
 image_size="auto"
 
 # Right gap between image and text
