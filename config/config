@@ -48,7 +48,6 @@ printinfo () {
     info linebreak
     info cols
     info linebreak
-    info linebreak
 }
 
 
@@ -212,10 +211,6 @@ colors=(distro)
 # Text Options {{{
 
 
-# Toggle line wrapping
-# --line_wrap on/off
-line_wrap="off"
-
 # Toggle bold text
 # --bold on/off
 bold="on"
@@ -349,6 +344,11 @@ xoffset=0
 # distro's logo as the ascii.
 # --ascii 'distro', path/to/ascii
 ascii="distro"
+
+# Ascii distro
+# Which distro's ascii art to display.
+# --ascii_distro 'auto', 'distro_name'
+ascii_distro="auto"
 
 # Ascii colors
 # When this is set to distro it will use your

@@ -29,7 +29,9 @@ Have a look at the wiki, I've updated/added some new pages!<br \>
     - [Fedora / RHEL / CentOS](#fedora--rhel--centos)
     - [Void Linux](#void-linux)
     - [BunsenLabs](#bunsenlabs)
+    - [Slackware](#slackware)
     - [Mac OS X](#mac-os-x)
+    - [iOS](#ios-1)
     - [Others](#others)
 - [Post Install](#post-install)
 - [Usage](#usage)
@@ -61,7 +63,7 @@ Have a look at the wiki, I've updated/added some new pages!<br \>
 
 ## Features
 
-- Supports **Linux**, **Mac OS X**, **iOS**, **BSD** and **Windows** (Cygwin)
+- Supports **Linux**, **Mac OS X**, **iOS**, **BSD**, **Solaris** and **Windows** (Cygwin)
 - Display a **full color image**, a file containing **ascii art** or your **distro's logo** in ascii next to the info.
 - The script is **fast**. We use bash builtins wherever possible and only spawn external processes when necessary.
 - Take a screenshot of your desktop on script finish.
@@ -83,20 +85,16 @@ Have a look at the wiki, I've updated/added some new pages!<br \>
     - Alpine Linux: You also need `ncurses`.
 
 
-##### Windows (CYGWIN)
-
-- `procps-ng` or `procps`
-
 ##### iOS
 
-These dependencies can all be installed through Cydia.
+These dependencies can all be installed through Cydia.<br \>
+Note: The cydia package installs these dependencies for you.
 
 - `Bourne-Again SHell`
 - `Core Utilities`
 - `Core Utilities (/bin)`
 - `Darwin Tools`
 - `system-cmds`
-- `bc`
 - `Gawk`
 - `grep`
 
@@ -122,6 +120,10 @@ These dependencies can all be installed through Cydia.
 
 - GPU: `glxinfo`
     - Not required on FreeBSD.
+
+##### Windows (CYGWIN)
+
+- `procps-ng` or `procps`
 
 \[1\] See **[#79](https://github.com/dylanaraps/neofetch/issues/79)** about why this is now a required dependency.
 
@@ -161,7 +163,9 @@ https://github.com/dylanaraps/neofetch/wiki/Following-HEAD
 - [Fedora / RHEL / CentOS](#fedora--rhel--centos)
 - [Void Linux](#void-linux)
 - [BunsenLabs](#bunsenlabs)
+- [Slackware](#slackware)
 - [Mac OS X](#mac-os-x)
+- [iOS](##ios-1)
 - [Others](#others)
 
 
@@ -173,7 +177,7 @@ https://github.com/dylanaraps/neofetch/wiki/Following-HEAD
 ### Gentoo / Funtoo
 
 1. Add the 3rd party repo
-    - `# wget https://git.io/vocNV -O /etc/portage/repos.conf/konimex.conf`
+    - `# wget -O /etc/portage/repos.conf/konimex.conf https://git.io/vocNV`
 2. Sync the repo
     - `# emerge --sync konimex`
 3. To enable additional features such as w3m and music support, enable the appropriate USE flags. For example:
@@ -247,8 +251,9 @@ Alternatively:
     - `sudo dnf install neofetch`
 
 ### Void Linux
-1. Install it from the official repositories
-    - `sudo xbps-install -S neofetch`
+Install it from the official repositories
+
+- `sudo xbps-install -S neofetch`
 
 ### BunsenLabs
 Neofetch is available in the official repos.
@@ -256,11 +261,19 @@ Neofetch is available in the official repos.
 1. `sudo apt-get update`
 2. `sudo apt-get install neofetch`
 
+### Slackware
+
+Download the files from [SlackBuilds](https://slackbuilds.org/repository/14.2/desktop/neofetch/) and follow [their instructions](https://slackbuilds.org/howto/).
+
 ### Mac OS X
 
 1. Install `neofetch` with Homebrew
     - `brew install neofetch`
 
+### iOS
+
+1. Add `http://dylanaraps.com/repo` to your cydia sources.
+2. Install `neofetch` through cydia.
 
 ### Others
 
@@ -270,8 +283,8 @@ Neofetch is available in the official repos.
 
 **NOTE:** Neofetch can be uninstalled easily using `make uninstall`.
 
-**NOTE:** Neofetch can also be run from any directory like a normal script,<br \>
-you'll just be missing the ascii distro logos and automatic config file creation.
+**NOTE:** You can run neofetch from any folder on your system, all the makefile does is move the files to a
+"sane" location. The makefile is optional.
 
 
 <!-- }}} -->
@@ -292,13 +305,6 @@ with other people.
 
 You can launch the script without a config file by using the flag `--config none` and you can<br \>
 specify a custom config location using `--config path/to/config`.
-
-
-#### Setting the prompt height
-
-If your shell prompt's height is greater than 1 line high, you'll need to change a config<br \>
-option to avoid issues with the top lines in the script output getting cut off. Set the variable<br \>
-`$prompt_height` to your shell prompt's height in lines or use the launch flag `--prompt_height`.
 
 
 #### Customizing what info gets displayed
@@ -322,12 +328,12 @@ https://github.com/dylanaraps/fetch/wiki/Customizing-Info
 
 If you don't want to use the config file you can customize almost everything using launch flags!
 
-Here's what my fetch alias looks like:
+Here's an example neofetch alias:
 
 ```sh
-alias fetch2="fetch \
+alias neofetch2="neofetch \
+--config off \
 --block_range 1 8 \
---line_wrap off \
 --bold off \
 --uptime_shorthand on \
 --gtk_shorthand on \
@@ -381,22 +387,18 @@ alias fetch2="fetch \
     --birthday_time on/off      Enable/Disable showing the time in birthday output
     --birthday_format format    Format the birthday output. (Uses 'date' cmd format)
 
-
     Text Formatting:
     --colors x x x x x x        Changes the text colors in this order:
                                 title, @, underline, subtitle, colon, info
     --underline on/off          enable/disable the underline.
     --underline_char char       Character to use when underlining title
-    --line_wrap on/off          Enable/Disable line wrapping
     --bold on/off               Enable/Disable bold text
-
 
     Color Blocks:
     --color_blocks on/off       Enable/Disable the color blocks
     --block_width num           Width of color blocks in spaces
     --block_height num          Height of color blocks in lines
     --block_range start end     Range of colors to print as blocks
-
 
     Progress Bars:
     --progress_char 'elapsed char' 'total char'
@@ -413,7 +415,6 @@ alias fetch2="fetch \
                                 Takes: bar, infobar, barinfo, off
     --disk_display mode         Progress bar mode.
                                 Takes: bar, infobar, barinfo, off
-
 
     Image:
     --image type                Image source. Where and what image we display.
@@ -436,7 +437,6 @@ alias fetch2="fetch \
                                 move the text closer to the left side.
     --clean                     Remove all cropped images
 
-
     Ascii:
     --ascii value               Where to get the ascii from, Possible values:
                                 distro, /path/to/ascii
@@ -446,19 +446,16 @@ alias fetch2="fetch \
                                 Supported distros: Arch, Gentoo, Crux, OpenBSD.
     --ascii_bold on/off         Whether or not to bold the ascii logo.
 
-
     Stdout:
     --stdout info info          Launch neofetch in stdout mode which prints the info
                                 in a plain-text format that you can use with
                                 lemonbar etc.
     --stdout_separator string   String to use as a separator in stdout mode.
 
-
     Screenshot:
     --scrot /path/to/img        Take a screenshot, if path is left empty the screen-
                                 shot function will use \$scrot_dir and \$scrot_name.
     --scrot_cmd cmd             Screenshot program to launch
-
 
     Other:
     --config /path/to/config    Specify a path to a custom config file
@@ -482,15 +479,12 @@ alias fetch2="fetch \
 
 #### How do I enable screenfetch mode?
 
-Launching the script with `--ascii` or setting `ascii="distro"` and `image="ascii"` <br \>
+Launching the script with `--ascii` or setting `image="ascii"` <br \>
 inside the config file will launch the script in "screenfetch mode". The script will<br \>
 display your distro's ascii next to the info, exactly like screenfetch.
 
 **NOTE:** If you **don't** have `w3m-img` or `imagemagick` installed screenfetch mode will be<br \>
 used automatically
-
-![arch](http://i.imgur.com/uCMjgf6.png)
-
 
 #### Why doesn't Neofetch support my wallpaper setter?
 
@@ -508,33 +502,6 @@ know where it's stored then adding support won't be a problem!<br \>
 
 
 ## Issues and Workarounds
-
-
-#### The text is too long for my terminal window and wraps to the next line
-
-There are a few ways to fix this.
-
-* Disable line wrapping with `line_wrap=off` in the script or with the launch flag `--line_wrap off`
-* The uptime and gtk info lines each have a shorthand option that makes their output smaller. You can <br \>
-  enable them by changing these variables or using these flags.
-
-```sh
-# Config options
-uptime_shorthand="on"
-gtk_shorthand="on"
-gpu_shorthand="on"
-birthday_shorthand="on"
-
-# Launch flags
---uptime_shorthand on
---gtk_shorthand on
---gpu_shorthand on
---birthday_shorthand on
-
-```
-
-* Edit the config to make the subtitles shorter
-* Resizing the terminal so that the lines don't wrap.
 
 
 #### The text is pushed over too far to the right
@@ -585,17 +552,11 @@ Thanks to:
 
 - [Screenfetch](https://github.com/KittyKatt/screenFetch):
     - I've used some snippets as a base for a few functions in this script.
-    - Most of the ascii art.
-- [ufetch](https://github.com/jschx/ufetch): Tiny ascii logos
-- [@metakirby5](https://github.com/metakirby5): Providing great feedback as well as ideas for the script.
-- [@jrgz](https://github.com/jrgz): Helping me test the Mac OS X version.
-- [@mclado](https://github.com/mclado): Helping me with Max OS X testing
-- [@xDemonessx](https://github.com/xDemonessx): Helping me test the Windows version.
-- [@tudurom](https://github.com/tudurom): Helping me test **everything**.
-- [@iandrewt](https://github.com/iandrewt): OS X related bug fixes and features.
-- [@konimex](https://github.com/konimex): Packaging neofetch for a wide range of distros.
-- [@dawidd6](https://github.com/dawidd6): Packaging neofetch for Debian / Ubuntu.
-- Everyone else who has helped test the script, given feedback or reported bugs.
+    - Some of the ascii logos.
+- [ufetch](https://github.com/jschx/ufetch):
+    - Tiny ascii logos
+- Everyone else helped out in one way or another. I'd list all of the names<br \>
+but there's just too many of you. :)
 
 
 <!-- }}} -->
