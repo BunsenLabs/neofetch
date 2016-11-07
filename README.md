@@ -20,6 +20,17 @@ Have a look at the wiki, I've updated/added some new pages!<br \>
 - [Screenshots](#screenshots)
 - [Features](#features)
 - [Dependencies](#dependencies)
+    - [Required dependencies](https://github.com/dylanaraps/neofetch#required-dependencies)
+    - [Image mode dependencies](https://github.com/dylanaraps/neofetch#image-mode-dependencies)
+    - [Optional dependencies](https://github.com/dylanaraps/neofetch#optional-dependencies)
+        - [Song](https://github.com/dylanaraps/neofetch#song)
+        - [Desktop Environment and Window Manager](https://github.com/dylanaraps/neofetch#desktop-environment-and-window-manager)
+        - [Wallpaper](https://github.com/dylanaraps/neofetch#wallpaper)
+        - [Resolution](https://github.com/dylanaraps/neofetch#resolution)
+        - [Screenshot](https://github.com/dylanaraps/neofetch#screenshot)
+        - [GPU](https://github.com/dylanaraps/neofetch#gpu)
+    - [iOS dependencies](https://github.com/dylanaraps/neofetch#ios)
+    - [Android dependencies](#android)
 - [Installation](#installation)
     - [Arch Linux](#arch)
     - [Gentoo / Funtoo](#gentoo--funtoo)
@@ -29,10 +40,12 @@ Have a look at the wiki, I've updated/added some new pages!<br \>
     - [Fedora / RHEL / CentOS](#fedora--rhel--centos)
     - [Void Linux](#void-linux)
     - [BunsenLabs](#bunsenlabs)
+    - [Solus](#solus)
     - [Slackware](#slackware)
-    - [Mac OS X](#mac-os-x)
+    - [macOS](#macos)
     - [iOS](#ios-1)
-    - [Others](#others)
+    - [Android (Termux)](#android-termux)
+    - [Manual](#manual)
 - [Post Install](#post-install)
 - [Usage](#usage)
 - [Frequently Asked Questions](#frequently-asked-questions)
@@ -48,11 +61,10 @@ Have a look at the wiki, I've updated/added some new pages!<br \>
 
 ## Screenshots
 
-![Linux](https://ipfs.pics/ipfs/QmRRYwcSRz1FHNx8VQiBixZq3qvBNk487fKGwUNTs7GQjA)
-![Windows](https://ipfs.pics/ipfs/Qmf5GpmqnMRhEzC1qoQ2tM4699tEXLManZTs5pz4mWJbCg)
-![Mac OS X](https://ipfs.pics/ipfs/QmWA8XX6pFkEuLLcrq5JZBx1KFEUaXanTy1jMxzKVRpwaT)
-![bsd](https://ipfs.pics/ipfs/QmSpyCGzSgYnyfbMetKqxy9cU3UFbneS3G8JrbdxkiNLgm)
-![bsd](https://ipfs.pics/ipfs/QmeZhs3CwGtM8CSVoorA2d2CqLxRzbJkdD7aYxa4Dixsea)
+![Linux](https://u.teknik.io/mhaDi.png)
+![Windows](https://u.teknik.io/0WmmV.png)
+![macOS](https://u.teknik.io/SGDlj.png)
+![Linux](https://u.teknik.io/x6V8U.png)
 
 
 <!-- }}} -->
@@ -63,7 +75,7 @@ Have a look at the wiki, I've updated/added some new pages!<br \>
 
 ## Features
 
-- Supports **Linux**, **Mac OS X**, **iOS**, **BSD**, **Solaris** and **Windows** (Cygwin)
+- Supports **Linux**, **MacOS**, **iOS**, **BSD**, **Solaris**, **Android**, **Haiku OS**, **GNU Hurd** and **Windows (Cygwin/Windows 10 Linux subsystem)**
 - Display a **full color image**, a file containing **ascii art** or your **distro's logo** in ascii next to the info.
 - The script is **fast**. We use bash builtins wherever possible and only spawn external processes when necessary.
 - Take a screenshot of your desktop on script finish.
@@ -74,10 +86,23 @@ Have a look at the wiki, I've updated/added some new pages!<br \>
 <!-- }}} -->
 
 
-<!-- Dependences {{{ -->
+<!-- Dependencies {{{ -->
 
 
 ## Dependencies
+
+- [Required dependencies](https://github.com/dylanaraps/neofetch#required-dependencies)
+- [Image mode dependencies](https://github.com/dylanaraps/neofetch#image-mode-dependencies)
+- [Optional dependencies](https://github.com/dylanaraps/neofetch#optional-dependencies)
+    - [Song](https://github.com/dylanaraps/neofetch#song)
+    - [Desktop Environment and Window Manager](https://github.com/dylanaraps/neofetch#desktop-environment-and-window-manager)
+    - [Wallpaper](https://github.com/dylanaraps/neofetch#wallpaper)
+    - [Resolution](https://github.com/dylanaraps/neofetch#resolution)
+    - [Screenshot](https://github.com/dylanaraps/neofetch#screenshot)
+    - [GPU](https://github.com/dylanaraps/neofetch#gpu)
+- [iOS dependencies](https://github.com/dylanaraps/neofetch#ios)
+- [Android dependencies](#android)
+
 
 ### Required dependencies:
 
@@ -85,7 +110,82 @@ Have a look at the wiki, I've updated/added some new pages!<br \>
     - Alpine Linux: You also need `ncurses`.
 
 
-##### iOS
+### Image mode dependencies:
+
+These dependencies are required for image mode to work.
+
+- Displaying images: `w3m-img` \[1\] or `iTerm2` or `Terminology` \[2\]
+- Thumbnail creation: `imagemagick`
+- Window size: A terminal emulator that supports `\033[14t` \[3\] or `xdotool` or `xwininfo + xprop` or `xwininfo + xdpyinfo`
+
+\[1\] `w3m-img` is sometimes bundled together with `w3m`.
+
+\[2\] Image support is built into Terminology and iTerm2, and doesn't require w3m-img.
+
+\[3\] See this wiki page to find out if your terminal emulator supports `\033[14t` or if you need an additonal dependency.
+
+
+### Optional dependencies:
+
+#### Song
+
+- Google Play Music Desktop Player: [`gpmdp-remote`](https://github.com/iAndrewT/gpmdp-remote)
+- MPD: `mpc`
+- CMUS: `cmus`
+- MOC: `moc`
+- Spotify: `spotify`
+- Rhythmbox: `rhythmbox`
+- Banshee: `banshee`
+- Amarok: `amarok`
+- Deadbeef: `deadbeef`
+
+#### Desktop Environment and Window Manager
+
+- Desktop Environment and Window Manager: `xprop` \[1\]
+
+\[1\] See **[#79](https://github.com/dylanaraps/neofetch/issues/79)** about why this is now a required dependency.
+
+#### Wallpaper
+
+**Linux, BSD and Solaris**
+
+- Wallpaper: `feh`, `nitrogen` or `gsettings`
+
+**Windows and macOS**
+
+- No additional dependencies needed.
+
+#### Resolution
+
+**Linux, BSD and Solaris**
+
+- Resolution: `xorg-xrandr` or `xorg-xdpyinfo` \[1\]
+
+**macOS**
+
+- Resolution (quicker): `screenresolution` \[2\]
+
+\[1\] Xrandr is prefered over xdpyinfo as Xrandr supports multi monitor and refresh rate display in the<br \>
+output.
+
+\[2\] `screenresolution` is installed for you when using homebrew.
+
+#### Screenshot
+
+- Screenshot: `scrot` \[1\]
+
+\[1\] You can use the launch flag `--scrot_cmd` or change the config option `$scrot_cmd` to your screenshot<br \>
+program's cmd and neofetch will use it instead of scrot.
+
+#### GPU
+
+**BSD and Solaris**
+
+- GPU: `glxinfo`
+    - Not required on FreeBSD.
+
+
+#### iOS
 
 These dependencies can all be installed through Cydia.<br \>
 Note: The cydia package installs these dependencies for you.
@@ -98,47 +198,15 @@ Note: The cydia package installs these dependencies for you.
 - `Gawk`
 - `grep`
 
-### Optional dependencies:
 
-- Desktop Environment and Window Manager: `xprop` \[1\]
-- Displaying images: `w3m-img` \[2\] \[3\] or `iTerm2` or `Terminology` \[4\]
-- Thumbnail creation: `imagemagick`
-- Displaying song information from Google Play Music Desktop Player: [`gpmdp-remote`](https://github.com/iAndrewT/gpmdp-remote)
+#### Android
 
-##### Linux / BSD
+- `bash`
+- `busybox`
 
-- Wallpaper: `feh`, `nitrogen` or `gsettings`
-- Current Song: `mpc`, `cmus`, `moc`, `spotify`, `gpmdc`
-- Resolution: `xorg-xrandr` or `xorg-xdpyinfo` \[5\]
-- Screenshot: `scrot` \[6\]
+Note: I recommend installing `termux` from the Play Store or F-Droid. Termux provides you with a fully working Linux environment, doesn't require root acess and includes all dependencies.
 
-##### OSX
-
-- Resolution (quicker): `screenresolution`
-
-##### BSD
-
-- GPU: `glxinfo`
-    - Not required on FreeBSD.
-
-##### Windows (CYGWIN)
-
-- `procps-ng` or `procps`
-
-\[1\] See **[#79](https://github.com/dylanaraps/neofetch/issues/79)** about why this is now a required dependency.
-
-\[2\] `w3m-img` is sometimes bundled together with `w3m`.
-
-\[3\] Image support only works in certain terminal emulators. The script will fallback to ascii mode on<br \>
-terminal emulators that don't support the xterm escape sequences we're using for image sizing.
-
-\[4\] Image support is built into Terminology and iTerm2, and doesn't require w3m-img.
-
-\[5\] Xrandr is prefered over xdpyinfo as Xrandr supports multi monitor and refresh rate display in the<br \>
-output.
-
-\[6\] You can use the launch flag `--scrot_cmd` or change the config option `$scrot_cmd` to your screenshot<br \>
-program's cmd and neofetch will use it instead of scrot.
+Note2: Neofetch is in Termux's official repos.
 
 
 <!-- }}} -->
@@ -163,10 +231,12 @@ https://github.com/dylanaraps/neofetch/wiki/Following-HEAD
 - [Fedora / RHEL / CentOS](#fedora--rhel--centos)
 - [Void Linux](#void-linux)
 - [BunsenLabs](#bunsenlabs)
+- [Solus](#solus)
 - [Slackware](#slackware)
-- [Mac OS X](#mac-os-x)
+- [macOS](#mac-os-x)
 - [iOS](##ios-1)
-- [Others](#others)
+- [Android (Termux)](#android-termux)
+- [Manual](#manual)
 
 
 ### Arch
@@ -176,39 +246,33 @@ https://github.com/dylanaraps/neofetch/wiki/Following-HEAD
 
 ### Gentoo / Funtoo
 
-1. Add the 3rd party repo
-    - `# wget -O /etc/portage/repos.conf/konimex.conf https://git.io/vocNV`
-2. Sync the repo
-    - `# emerge --sync konimex`
-3. To enable additional features such as w3m and music support, enable the appropriate USE flags. For example:
-    - `# echo "app-misc/neofetch X -moc" >> /etc/portage/package.use`
-4. Install the package
-    - `# emerge -a app-misc/neofetch`
+You can install `app-misc/neofetch` from Gentoo/Funtoo's official repositories.
 
-To install the git version, just add `app-misc/neofetch ~<your architecture>` to `package.accept_keywords`
+To install the git version of neofetch, use `=app-misc/neofetch-9999` instead.
 
 
 ### CRUX
 
 1. Install git and the git ports(8) driver
     - `sudo prt-get depinst git`
-2. Add the 3rd party repo
-    - `sudo wget -O /etc/ports/tudurom.git https://git.io/vV46y`
+2. Add the `6c36-git` repository
+    - `sudo wget -O /etc/ports/6c37-git.git "https://raw.githubusercontent.com/6c37/cross/master/git-driver/6c37-git.git"`
 3. Sync the repos
     - `sudo ports -u`
 4. Add the repo to /etc/prt-get.conf with your text editor of choice
-    - `prtdir /usr/ports/tudurom`
+    - `prtdir /usr/ports/6c37-git`
 5. Install the package
     - `sudo prt-get depinst neofetch`
 
-Or alternatively use the [port](https://github.com/tudurom/crux-ports/blob/master/neofetch/Pkgfile):
+Or alternatively use the [port](https://raw.githubusercontent.com/6c37/crux-ports-git/3.2/neofetch/Pkgfile):
 
 1. Download port
-    - `wget -O ~/work/neofetch/Pkgfile https://raw.githubusercontent.com/tudurom/crux-ports/master/neofetch/Pkgfile`
+    - `wget -O ~/work/neofetch/Pkgfile "https://raw.githubusercontent.com/6c37/crux-ports-git/3.2/neofetch/Pkgfile"`
 2. Build the package
     - `fakeroot pkgmk -d`
 3. Install the package
     - `sudo pkgadd neofetch#git-*.pkg.tar.gz`
+
 
 ### Ubuntu
 
@@ -218,6 +282,7 @@ Or alternatively use the [port](https://github.com/tudurom/crux-ports/blob/maste
     - `sudo apt update`
 3. Install the package
     - `sudo apt install neofetch`
+
 
 ### Debian
 
@@ -250,32 +315,50 @@ Alternatively:
 3. Install the package
     - `sudo dnf install neofetch`
 
+
 ### Void Linux
+
 Install it from the official repositories
 
 - `sudo xbps-install -S neofetch`
 
+
 ### BunsenLabs
+
 Neofetch is available in the official repos.
 
 1. `sudo apt-get update`
 2. `sudo apt-get install neofetch`
 
+
+### Solus
+
+Use the Software Center or type `sudo eopkg it neofetch`.
+
+
 ### Slackware
 
 Download the files from [SlackBuilds](https://slackbuilds.org/repository/14.2/desktop/neofetch/) and follow [their instructions](https://slackbuilds.org/howto/).
 
-### Mac OS X
+
+### macOS
 
 1. Install `neofetch` with Homebrew
     - `brew install neofetch`
+
 
 ### iOS
 
 1. Add `http://dylanaraps.com/repo` to your cydia sources.
 2. Install `neofetch` through cydia.
 
-### Others
+
+### Android (Termux)
+
+You can install it using `apt install neofetch`
+
+
+### Manual
 
 1. Download the latest source at https://github.com/dylanaraps/neofetch
 2. Run `make install` inside the script directory to install the script.
@@ -359,29 +442,33 @@ alias neofetch2="neofetch \
                                 in the output.
                                 NOTE: You can supply multiple args. eg.
                                 'neofetch --disable cpu gpu disk shell'
-    --osx_buildversion on/off   Hide/Show Mac OS X build version.
-    --osx_codename on/off       Hide/Show Mac OS X codename.
-    --os_arch on/off            Hide/Show Windows architecture.
+    --os_arch on/off            Hide/Show OS architecture.
     --speed_type type           Change the type of cpu speed to display.
                                 Possible values: current, min, max, bios,
                                 scaling_current, scaling_min, scaling_max
                                 NOTE: This only support Linux with cpufreq.
     --cpu_shorthand type        Shorten the output of CPU
                                 Possible values: name, speed, tiny, on, off
-    --cpu_cores on/off          Whether or not to display the number of CPU cores
+    --cpu_cores type            Whether or not to display the number of CPU cores
+                                Takes: logical, physical, off
+                                Note: 'physical' doesn't work on BSD.
+    --cpu_speed on/off          Hide/Show cpu speed.
+    --cpu_temp on/off           Hide/Show cpu temperature.
+                                NOTE This only works on linux.
+    --distro_shorthand on/off   Shorten the output of distro (tiny, on, off)
+                                NOTE: This option won't work in Windows (Cygwin)
     --kernel_shorthand on/off   Shorten the output of kernel
+                                NOTE: This option won't work in BSDs (except PacBSD and PC-BSD)
     --uptime_shorthand on/off   Shorten the output of uptime (tiny, on, off)
     --refresh_rate on/off       Whether to display the refresh rate of each monitor
                                 Unsupported on Windows
-    --gpu_shorthand on/off      Shorten the output of GPU (tiny, on, off)
+    --gpu_brand on/off          Enable/Disable GPU brand in output. (AMD/NVIDIA/Intel)
     --gtk_shorthand on/off      Shorten output of gtk theme/icons
     --gtk2 on/off               Enable/Disable gtk2 theme/icons output
     --gtk3 on/off               Enable/Disable gtk3 theme/icons output
     --shell_path on/off         Enable/Disable showing \$SHELL path
     --shell_version on/off      Enable/Disable showing \$SHELL version
-    --battery_num num           Which battery to display, default value is 'all'
-    --battery_shorthand on/off  Whether or not each battery gets its own line/title
-    --ip_host url               Url to ping for public IP
+    --ip_host url               Url to query for public IP
     --song_shorthand on/off     Print the Artist/Title on seperate lines
     --birthday_shorthand on/off Shorten the output of birthday
     --birthday_time on/off      Enable/Disable showing the time in birthday output
@@ -432,6 +519,8 @@ alias neofetch2="neofetch \
                                 window. This only works with w3m.
     --yoffset px                How close the image will be to the top edge of the
                                 window. This only works with w3m.
+    --bg_color color            Background color to display behind transparent image.
+                                This only works with w3m.
     --gap num                   Gap between image and text.
                                 NOTE: --gap can take a negative value which will
                                 move the text closer to the left side.
@@ -445,16 +534,13 @@ alias neofetch2="neofetch \
     --ascii_logo_size           Size of ascii logo.
                                 Supported distros: Arch, Gentoo, Crux, OpenBSD.
     --ascii_bold on/off         Whether or not to bold the ascii logo.
-
-    Stdout:
-    --stdout info info          Launch neofetch in stdout mode which prints the info
-                                in a plain-text format that you can use with
-                                lemonbar etc.
-    --stdout_separator string   String to use as a separator in stdout mode.
+    --logo | -L                 Hide the info text and only show the ascii logo.
 
     Screenshot:
     --scrot /path/to/img        Take a screenshot, if path is left empty the screen-
                                 shot function will use \$scrot_dir and \$scrot_name.
+    --upload | -su /pth/t/img   Same as --scrot but uploads the scrot to a website.
+    --image_host                Website to upload scrots to. Takes: imgur, teknik
     --scrot_cmd cmd             Screenshot program to launch
 
     Other:

@@ -1,4 +1,4 @@
-.TH NEOFETCH "1" "June 2016" "1.8" "User Commands"
+.TH NEOFETCH "1" "November 2016" "1.9.1" "User Commands"
 .SH NAME
 neofetch \- simple system information script
 
@@ -19,14 +19,8 @@ NOTE: You can supply multiple args. eg.
 .br
 \'neofetch --disable cpu gpu disk shell\'
 .TP
-.B \--osx_buildversion 'on/off'
-Hide/Show Mac OS X build version.
-.TP
-.B \--osx_codename 'on/off'
-Hide/Show Mac OS X codename.
-.TP
 .B \--os_arch 'on/off'
-Hide/Show Windows architecture.
+Hide/Show OS architecture.
 .TP
 .B \--speed_type 'type'
 Change the type of cpu speed to display.
@@ -41,21 +35,39 @@ Shorten the output of CPU
 .br
 Possible values: name, speed, tiny, on, off
 .TP
-.B \--cpu_cores 'on/off'
+.B \--cpu_cores 'logical/physical/off'
 Whether or not to display the number of CPU cores
+.br
+Note: 'physical' doesn't work on BSD.
+.TP
+.B \--cpu_speed 'on/off'
+Hide/Show cpu speed.
+.TP
+.B \--cpu_temp 'on/off'
+Hide/Show cpu temperature.
+.br
+NOTE This only works on linux.
+.TP
+.B \--distro_shorthand 'on/off'
+Shorten the output of distro (tiny, on, off)
+.br
+NOTE: This option won't work in Windows (Cygwin)
 .TP
 .B \--kernel_shorthand 'on/off'
 Shorten the output of kernel
+.br
+NOTE: This option won't work in BSDs (except PacBSD and PC-BSD)
 .TP
 .B \--uptime_shorthand 'on/off'
 Shorten the output of uptime (tiny, on, off)
 .TP
 .B \--refresh_rate 'on/off'
 Whether to display the refresh rate of each monitor
-Unsupported on Windows
+.br
+Note: Unsupported on Windows
 .TP
-.B \--gpu_shorthand 'on/off'
-Shorten the output of GPU (tiny, on, off)
+.B \--gpu_brand on/off
+Enable/Disable GPU brand in output. (AMD/NVIDIA/Intel)
 .TP
 .B \--gtk_shorthand 'on/off'
 Shorten output of gtk theme/icons
@@ -67,19 +79,13 @@ Enable/Disable GTK2 theme/icons output
 Enable/Disable gtk3 theme/icons output
 .TP
 .B \--shell_path 'on/off'
-Enable/Disable showing \$SHELL path
+Enable/Disable showing $SHELL path
 .TP
 .B \--shell_version 'on/off'
-Enable/Disable showing \$SHELL version
-.TP
-.B \--battery_num 'num'
-Which battery to display, default value is 'all'
-.TP
-.B \--battery_shorthand 'on/off'
-Whether or not each battery gets its own line/title
+Enable/Disable showing $SHELL version
 .TP
 .B \--ip_host 'url'
-URL to ping for public IP
+URL to query for public IP
 .TP
 .B \--song_shorthand 'on/off'
 Print the Artist/Title on seperate lines
@@ -193,6 +199,10 @@ window in pixel. This only works with w3m.
 How close the image will be to the top edge
 of the window. This only works with w3m.
 .TP
+.B \--bg_color 'color'
+Background color to display behind transparent image.
+This only works with w3m.
+.TP
 .B \--gap 'num'
 Gap between image and text.
 .br
@@ -222,21 +232,21 @@ Possible values: small, normal
 .TP
 .B \--ascii_bold 'on/off'
 Whether or not to bold the ascii logo.
-
-.SH STDOUT
 .TP
-.B \--stdout info info
-Launch fetch in stdout mode which prints the info in
-a plain-text format that you can use with lemonbar etc.
-.TP
-.B \--stdout_separator 'string'
-String to use as a separator in stdout mode.
+.B \--logo | -L
+Hide the info text and only show the ascii logo.
 
 .SH SCREENSHOT
 .TP
 .B \--scrot 'path'
 Take a screenshot, if path is left empty the screenshot
-function will use \$scrot_dir and \$scrot_name.
+function will use $scrot_dir and $scrot_name.
+.TP
+.B \--upload | -su 'path'
+Same as --scrot but uploads the scrot to a website.
+.TP
+.B \--image_host 'host'
+Website to upload scrots to. Takes: imgur, teknik
 .TP
 .B \--scrot_cmd 'cmd'
 Screenshot program to launch

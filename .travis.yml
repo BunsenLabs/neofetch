@@ -10,5 +10,4 @@ before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install screenresolution; fi
 
 script:
-    - sudo make install
-    - time neofetch --ascii --config off --ascii_distro travis -v --test
+    - time ./neofetch --ascii --config travis --ascii_distro travis -v
