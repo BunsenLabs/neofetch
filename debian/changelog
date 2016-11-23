@@ -1,3 +1,10 @@
+neofetch (1.9.1~bl2+843d4b9-1) jessie-backports; urgency=medium
+
+  * Import recent upstream changes
+  * Build for BL jessie-backports
+
+ -- Jens John <dev@2ion.de>  Wed, 23 Nov 2016 16:02:10 +0100
+
 neofetch (1.9.1~bl1+12e2a8b-1) jessie-backports; urgency=medium
 
   * Non-maintainer upload.
