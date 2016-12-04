@@ -1,3 +1,9 @@
+neofetch (2.0-1) jessie-backports; urgency=medium
+
+  * Import recent upstream release
+
+ -- Jens John <dev@2ion.de>  Sun, 04 Dec 2016 18:02:26 +0100
+
 neofetch (1.9.1~bl2+843d4b9-1) jessie-backports; urgency=medium
 
   * Import recent upstream changes
