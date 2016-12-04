@@ -39,91 +39,12 @@ get_os() {
     esac
 }
 
-get_model() {
-    case "$os" in
-        "Linux")
-            if [[ -d "/system/app/" && -d "/system/priv-app" ]]; then
-                model="$(getprop ro.product.brand) $(getprop ro.product.model)"
-
-            elif [[ -f /sys/devices/virtual/dmi/id/product_name ||
-                    -f /sys/devices/virtual/dmi/id/product_version ]]; then
-                model="$(< /sys/devices/virtual/dmi/id/product_name)"
-                model+=" $(< /sys/devices/virtual/dmi/id/product_version)"
-                model="${model/To Be Filled*}"
-
-            elif [[ -f /sys/firmware/devicetree/base/model ]]; then
-                model="$(< /sys/firmware/devicetree/base/model)"
-
-            elif [[ -f /tmp/sysinfo/model ]]; then
-                model="$(< /tmp/sysinfo/model)"
-            fi
-        ;;
-
-        "Mac OS X") model="$(sysctl -n hw.model)" ;;
-        "iPhone OS")
-            case "$machine_arch" in
-                "iPad1,1") model="iPad" ;;
-                "iPad2,"[1-4]) model="iPad2" ;;
-                "iPad3,"[1-3]) model="iPad3" ;;
-                "iPad3,"[4-6]) model="iPad4" ;;
-                "iPad4,"[1-3]) model="iPad Air" ;;
-                "iPad5,"[3-4]) model="iPad Air 2" ;;
-                "iPad6,"[7-8]) model="iPad Pro (12.9 Inch)" ;;
-                "iPad6,"[3-4]) model="iPad Pro (9.7 Inch)" ;;
-                "iPad2,"[5-7]) model="iPad mini" ;;
-                "iPad4,"[4-6]) model="iPad mini 2" ;;
-                "iPad4,"[7-9]) model="iPad mini 3" ;;
-                "iPad5,"[1-2]) model="iPad mini 4" ;;
-
-                "iPhone1,1") model="iPhone" ;;
-                "iPhone1,2") model="iPhone 3G" ;;
-                "iPhone2,1") model="iPhone 3GS" ;;
-                "iPhone3,"[1-3]) model="iPhone 4" ;;
-                "iPhone4,1") model="iPhone 4S" ;;
-                "iPhone5,"[1-2]) model="iPhone 4" ;;
-                "iPhone5,"[3-4]) model="iPhone 5c" ;;
-                "iPhone6,"[1-2]) model="iPhone 5s" ;;
-                "iPhone7,2") model="iPhone 6" ;;
-                "iPhone7,1") model="iPhone 6 Plus" ;;
-                "iPhone8,1") model="iPhone 6s" ;;
-                "iPhone8,2") model="iPhone 6s Plus" ;;
-                "iPhone8,4") model="iPhone SE" ;;
-                "iPhone9,1" | "iPhone9,3") model="iPhone 7" ;;
-                "iPhone9,2" | "iPhone9,4") model="iPhone 7 Plus" ;;
-
-                "iPod1,1") model="iPod touch" ;;
-                "ipod2,1") model="iPod touch 2G" ;;
-                "ipod3,1") model="iPod touch 3G" ;;
-                "ipod4,1") model="iPod touch 4G" ;;
-                "ipod5,1") model="iPod touch 5G" ;;
-                "ipod7,1") model="iPod touch 6G" ;;
-            esac
-        ;;
-
-        "BSD")
-            model="$(sysctl -n hw.vendor hw.product)"
-        ;;
-
-        "Windows")
-            model="$(wmic computersystem get manufacturer,model /value)"
-            model="${model/Manufacturer'='}"
-            model="${model/Model'='}"
-            model="${model//*To Be Filled*}"
-        ;;
-
-        "Solaris")
-            model="$(prtconf -b | awk -F':' '/banner-name/ {printf $2}')"
-        ;;
-    esac
-}
-
 get_distro() {
     [[ "$distro" ]] && return
 
     case "$os" in
         "Linux" | "GNU")
-            if grep -q -F 'Microsoft' /proc/version || \
-               grep -q -F 'Microsoft' /proc/sys/kernel/osrelease; then
+            if [[ "$(< /proc/version)" =~ "Microsoft" || "$(< /proc/sys/kernel/osrelease)" =~ "Microsoft" ]]; then
                 case "$distro_shorthand" in
                     "on")   distro="$(lsb_release -sir) [Windows 10]" ;;
                     "tiny") distro="Windows 10" ;;
@@ -131,7 +52,6 @@ get_distro() {
                 esac
                 ascii_distro="Windows 10"
 
-            # TODO: Install Red Star OS and check if this is really needed.
             elif [[ -f "/etc/redstar-release" ]]; then
                 case "$distro_shorthand" in
                     "on" | "tiny") distro="Red Star OS" ;;
@@ -253,6 +173,89 @@ get_distro() {
         ascii_distro="$(trim "$distro")"
 }
 
+get_model() {
+    case "$os" in
+        "Linux")
+            if [[ -d "/system/app/" && -d "/system/priv-app" ]]; then
+                model="$(getprop ro.product.brand) $(getprop ro.product.model)"
+
+            elif [[ -f /sys/devices/virtual/dmi/id/product_name ||
+                    -f /sys/devices/virtual/dmi/id/product_version ]]; then
+                model="$(< /sys/devices/virtual/dmi/id/product_name)"
+                model+=" $(< /sys/devices/virtual/dmi/id/product_version)"
+
+            elif [[ -f /sys/firmware/devicetree/base/model ]]; then
+                model="$(< /sys/firmware/devicetree/base/model)"
+
+            elif [[ -f /tmp/sysinfo/model ]]; then
+                model="$(< /tmp/sysinfo/model)"
+            fi
+
+            model="${model//To Be Filled*}"
+            model="${model//OEM*}"
+            model="${model//Not Applicable}"
+            model="${model//System Product Name}"
+            model="${model//System Version}"
+        ;;
+
+        "Mac OS X") model="$(sysctl -n hw.model)" ;;
+        "iPhone OS")
+            case "$machine_arch" in
+                "iPad1,1") model="iPad" ;;
+                "iPad2,"[1-4]) model="iPad2" ;;
+                "iPad3,"[1-3]) model="iPad3" ;;
+                "iPad3,"[4-6]) model="iPad4" ;;
+                "iPad4,"[1-3]) model="iPad Air" ;;
+                "iPad5,"[3-4]) model="iPad Air 2" ;;
+                "iPad6,"[7-8]) model="iPad Pro (12.9 Inch)" ;;
+                "iPad6,"[3-4]) model="iPad Pro (9.7 Inch)" ;;
+                "iPad2,"[5-7]) model="iPad mini" ;;
+                "iPad4,"[4-6]) model="iPad mini 2" ;;
+                "iPad4,"[7-9]) model="iPad mini 3" ;;
+                "iPad5,"[1-2]) model="iPad mini 4" ;;
+
+                "iPhone1,1") model="iPhone" ;;
+                "iPhone1,2") model="iPhone 3G" ;;
+                "iPhone2,1") model="iPhone 3GS" ;;
+                "iPhone3,"[1-3]) model="iPhone 4" ;;
+                "iPhone4,1") model="iPhone 4S" ;;
+                "iPhone5,"[1-2]) model="iPhone 4" ;;
+                "iPhone5,"[3-4]) model="iPhone 5c" ;;
+                "iPhone6,"[1-2]) model="iPhone 5s" ;;
+                "iPhone7,2") model="iPhone 6" ;;
+                "iPhone7,1") model="iPhone 6 Plus" ;;
+                "iPhone8,1") model="iPhone 6s" ;;
+                "iPhone8,2") model="iPhone 6s Plus" ;;
+                "iPhone8,4") model="iPhone SE" ;;
+                "iPhone9,1" | "iPhone9,3") model="iPhone 7" ;;
+                "iPhone9,2" | "iPhone9,4") model="iPhone 7 Plus" ;;
+
+                "iPod1,1") model="iPod touch" ;;
+                "ipod2,1") model="iPod touch 2G" ;;
+                "ipod3,1") model="iPod touch 3G" ;;
+                "ipod4,1") model="iPod touch 4G" ;;
+                "ipod5,1") model="iPod touch 5G" ;;
+                "ipod7,1") model="iPod touch 6G" ;;
+            esac
+        ;;
+
+        "BSD")
+            model="$(sysctl -n hw.vendor hw.product)"
+        ;;
+
+        "Windows")
+            model="$(wmic computersystem get manufacturer,model /value)"
+            model="${model/Manufacturer'='}"
+            model="${model/Model'='}"
+            model="${model//*To Be Filled*}"
+        ;;
+
+        "Solaris")
+            model="$(prtconf -b | awk -F':' '/banner-name/ {printf $2}')"
+        ;;
+    esac
+}
+
 get_title() {
     title="${USER:-$(whoami || printf "%s" "${HOME/*\/}")}@${HOSTNAME:-$(hostname)}"
 }
@@ -284,7 +287,7 @@ get_uptime() {
         *)
             # Get uptime in seconds
             case "$os" in
-                "Linux" | "Windows")
+                "Linux" | "Windows" | "GNU")
                     seconds="$(< /proc/uptime)"
                     seconds="${seconds/.*}"
                 ;;
@@ -352,6 +355,14 @@ get_uptime() {
 }
 
 get_packages() {
+    # Remove /usr/games from $PATH.
+    # This solves issues with neofetch opening the
+    # 'pacman' game.
+    local PATH=":${PATH}:"
+    local PATH="${PATH/':/usr/games:'/:}"
+    local PATH="${PATH%:}"
+    local PATH="${PATH#:}"
+
     case "$os" in
         "Linux" | "iPhone OS" | "Solaris" | "GNU")
             type -p pacman >/dev/null && \
@@ -774,6 +785,20 @@ get_cpu() {
 
             # Get cpu cores
             cores="$(sysctl -n hw.ncpu)"
+
+            # Get cpu temp
+            if [[ "$cpu_temp" == "on" ]]; then
+                case "$distro" in
+                    "FreeBSD"* | "PacBSD"* | "DragonFly"* | "PCBSD"*)
+                        temp="$(sysctl -n dev.cpu.0.temperature)"
+                        temp="[${temp/C/°C}]"
+                    ;;
+                    "OpenBSD"* | "Bitrig"*)
+                        temp="$(sysctl -n hw.sensors.lm0.temp0)"
+                        temp="[${temp/ degC/°C}]"
+                    ;;
+                esac
+            fi
         ;;
 
         "Solaris")
@@ -832,7 +857,7 @@ get_cpu() {
     cpu="${cpu//Six-Core}"
     cpu="${cpu//Eight-Core}"
     cpu="${cpu//Core}"
-    cpu="${cpu//with Radeon HD Graphics}"
+    cpu="${cpu//with Radeon * Graphics}"
 
     # Add cpu cores to output
     [[ "$cpu_cores" != "off" && "$cores" ]] && \
@@ -896,57 +921,38 @@ get_cpu_usage() {
 get_gpu() {
     case "$os" in
         "Linux" | "GNU")
-            # Use cache if it exists
-            if [[ -f "/tmp/neofetch/gpu" ]]; then
-                source "/tmp/neofetch/gpu"
-            else
-                bdf_number="$(PATH="/sbin:$PATH" lspci -k | grep -A2 -F 'VGA' | grep -B2 -F 'Kernel driver in use' | awk '/^\w/ {print $1}')"
+            gpu="$(PATH="/sbin:$PATH" lspci -mm | awk -F '\\"|\\" \\"' '/Display|3D|VGA/ {print $3 " " $4}')"
 
-                if [[ -z "$bdf_number" ]]; then
-                    # Fallback if no kernel driver is in use
-                    gpu="$(PATH="/sbin:$PATH" lspci -mm | awk -F '\\"|\\" \\"' '/3D|VGA/ {print $3 " " $4}')"
+            case "$gpu" in
+                *"advanced"*)
+                    gpu="${gpu//Intel*$'\n'}"
+                    gpu="${gpu/'[AMD/ATI]' }"
+                    gpu="${gpu/'[AMD]' }"
+                    gpu="${gpu/*\[}"
+                    gpu="${gpu/\]*}"
+                    gpu="AMD $gpu"
+                ;;
 
-                else
-                    # Find the currently used GPU by its BDF
-                    gpu="$(PATH="/sbin:$PATH" lspci -mm | awk -v bdf_number="$bdf_number" -F '\\"|\\" \\"' '$0 ~ bdf_number {print $3 " " $4}')"
-                fi
+                *"nvidia"*)
+                    gpu="${gpu//Intel*$'\n'}"
+                    gpu="${gpu/*\[}"
+                    gpu="${gpu/\]*}"
+                    gpu="NVIDIA $gpu"
+                ;;
 
-                case "$gpu" in
-                    intel*) gpu="Intel Integrated Graphics" ;;
+                *"virtualbox"*)
+                    gpu="VirtualBox Graphics Adapter"
+                ;;
+            esac
 
-                    advanced*)
-                        gpu="${gpu/'[AMD/ATI]' }"
-                        gpu="${gpu/'[AMD]' }"
-                        gpu="${gpu/*\[}"
-                        gpu="${gpu/\]*}"
-                        gpu="${gpu/\/*}"
-                        gpu="AMD $gpu"
-                    ;;
-
-                    nvidia*)
-                        gpu="${gpu/*\[}"
-                        gpu="${gpu/\]*}"
-                        gpu="NVIDIA $gpu"
-                    ;;
-
-                    *virtualbox*)
-                        gpu="VirtualBox Graphics Adapter"
-                    ;;
-                esac
-                cache "gpu" "$gpu" "/tmp"
-            fi
+            [[ "$gpu" =~ "intel" ]] && \
+                gpu="Intel Integrated Graphics"
         ;;
 
         "Mac OS X")
-            # Use cache if it exists
-            if [[ -f "/Library/Caches/neofetch/gpu" ]]; then
-                source "/Library/Caches/neofetch/gpu"
-            else
-                gpu="$(system_profiler SPDisplaysDataType | awk -F': ' '/^\ *Chipset Model:/ {printf $2 ", "}')"
-                gpu="${gpu//'/ $'}"
-                gpu="${gpu%,*}"
-                cache "gpu" "$gpu" "/Library/Caches/"
-            fi
+            gpu="$(system_profiler SPDisplaysDataType | awk -F': ' '/^\ *Chipset Model:/ {printf $2 ", "}')"
+            gpu="${gpu//'/ $'}"
+            gpu="${gpu%,*}"
         ;;
 
         "iPhone OS")
@@ -998,7 +1004,7 @@ get_gpu() {
 
         "Windows")
             gpu="$(wmic path Win32_VideoController get caption /value)"
-            gpu="${gpu/Caption'='}"
+            gpu="${gpu//Caption'='}"
         ;;
 
         "Haiku")
@@ -1011,6 +1017,8 @@ get_gpu() {
         gpu="${gpu/NVIDIA}"
         gpu="${gpu/Intel}"
     fi
+
+    cache "gpu" "$gpu"
 }
 
 get_memory() {
@@ -1031,7 +1039,7 @@ get_memory() {
         ;;
 
         "Mac OS X" | "iPhone OS")
-            mem_total="$(($(sysctl -n hw.memsize) / 1024^2))"
+            mem_total="$(($(sysctl -n hw.memsize) / 1024 / 1024))"
             mem_wired="$(vm_stat | awk '/wired/ { print $4 }')"
             mem_active="$(vm_stat | awk '/active / { printf $3 }')"
             mem_compressed="$(vm_stat | awk '/occupied/ { printf $5 }')"
@@ -1042,12 +1050,12 @@ get_memory() {
             case "$distro" in
                 "NetBSD"*)
                     memfree="$(($(awk -F ':|kB' '/MemFree:/ {printf $2}' /proc/meminfo) / 1024))"
-                    mem_total="$(($(sysctl -n hw.physmem64) / 1024^2))"
+                    mem_total="$(($(sysctl -n hw.physmem64) / 1024 / 1024))"
                 ;;
 
                 *)
                     memfree="$(($(vmstat | awk 'END{printf $5}') / 1024))"
-                    mem_total="$(($(sysctl -n hw.physmem) / 1024^2))"
+                    mem_total="$(($(sysctl -n hw.physmem) / 1024 / 1024))"
                 ;;
             esac
 
@@ -1064,9 +1072,9 @@ get_memory() {
         ;;
 
         "Haiku")
-            mem_total="$(($(sysinfo -mem | awk -F '\\/ |)' '{print $2; exit}') / 1024^2))"
+            mem_total="$(($(sysinfo -mem | awk -F '\\/ |)' '{print $2; exit}') / 1024 / 1024))"
             mem_used="$(sysinfo -mem | awk -F '\\/|)' '{print $2; exit}')"
-            mem_used="$((${mem_used/max} / 1024^2))"
+            mem_used="$((${mem_used/max} / 1024 / 1024))"
         ;;
     esac
     memory="${mem_used}MB / ${mem_total}MB"
@@ -1081,7 +1089,7 @@ get_memory() {
 
 get_song() {
     # This is absurdly long.
-    player="$(ps x | awk '!(/awk|Helper|Cache/) && /mpd|cmus|mocp|spotify|Google Play|iTunes.app|rhythmbox|banshee|amarok|deadbeef|audacious|gnome-music|lollypop/ {printf $5 " " $6; exit}')"
+    player="$(ps x | awk '!(/awk|Helper|Cache/) && /mpd|cmus|mocp|spotify|Google Play|iTunes.app|rhythmbox|banshee|amarok|deadbeef|audacious|gnome-music|lollypop|clementine|pragha/ {printf $5 " " $6; exit}')"
 
     case "${player/*\/}" in
         "mpd"*)
@@ -1187,6 +1195,23 @@ get_song() {
             song="${song% - }"
         ;;
 
+        "clementine"*)
+            # dbus
+            song="$(
+                dbus-send --print-reply --dest=org.mpris.clementine /org/mpris/MediaPlayer2 \
+                org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'Metadata' |\
+                awk -F 'string "' '/string|array/ {printf "%s",$2; next}{print ""}' |\
+                awk -F '"' '/artist|title/ {printf $2 " - "}'
+            )"
+            song="${song% - }"
+        ;;
+
+        "pragha"*)
+            artist="$(pragha -c | awk -F':' '/artist/ {print $2}')"
+            title="$(pragha -c | awk -F':' '/title/ {print $2}')"
+            song="$artist - $title"
+        ;;
+
         *) song="Not Playing" ;;
     esac
 
@@ -1242,6 +1267,10 @@ get_resolution() {
 
             scale_factor="$(/usr/libexec/PlistBuddy -c "Print DisplayAnyUserSets:0:0:Resolution" /Library/Preferences/com.apple.windowserver.plist)"
 
+            # If no refresh rate is empty.
+            [[ "$resolution" =~ "@ Hz" ]] && \
+                resolution="${resolution//@ Hz}"
+
             (("${scale_factor%.*}" == 2)) && \
                 resolution="${resolution// @/@2x @}"
 
@@ -1256,10 +1285,10 @@ get_resolution() {
 
         "Windows")
             width="$(wmic path Win32_VideoController get CurrentHorizontalResolution /value)"
-            width="${width/CurrentHorizontalResolution'='/}"
+            width="${width//CurrentHorizontalResolution'='/}"
 
             height="$(wmic path Win32_VideoController get CurrentVerticalResolution /value)"
-            height="${height/CurrentVerticalResolution'='/}"
+            height="${height//CurrentVerticalResolution'='/}"
 
             [[ "$width" ]] && resolution="${width}x${height}"
         ;;
@@ -1470,7 +1499,7 @@ get_term() {
     esac
 
     case "${name// }" in
-        "${SHELL/*\/}" | *"sh" | "tmux"* | "screen") get_term "$parent" ;;
+        "${SHELL/*\/}" | *"sh" | "tmux"* | "screen" | "su") get_term "$parent" ;;
         "login"* | *"Login"* | "init") term="$(tty)" ;;
         "ruby" | "1" | "systemd" | "sshd"* | "python"* | "USER"*"PID"*) unset term ;;
         "gnome-terminal-") term="gnome-terminal" ;;
@@ -1700,7 +1729,7 @@ get_local_ip() {
 get_public_ip() {
     if type -p dig >/dev/null; then
         public_ip="$(dig +time=1 +tries=1 +short myip.opendns.com @resolver1.opendns.com)"
-        [[ "$public_ip" =~ ^\; ]] && unset public_ip
+       [[ "$public_ip" =~ ^\; ]] && unset public_ip
     fi
 
     if [[ -z "$public_ip" ]] && type -p curl >/dev/null; then
@@ -1710,6 +1739,8 @@ get_public_ip() {
     if [[ -z "$public_ip" ]] && type -p wget >/dev/null; then
         public_ip="$(wget -T 10 -qO- "$public_ip_host")"
     fi
+
+    cache "public_ip" "$public_ip"
 }
 
 get_users() {
@@ -1813,6 +1844,8 @@ get_cols() {
         cols="${cols%%'nl'}"
         cols="${cols//nl/\\n\\033[${text_padding}C${zws}}"
     fi
+
+    unset blocks blocks2
 }
 
 # IMAGES
@@ -1872,7 +1905,7 @@ get_image_backend() {
 get_ascii() {
     if [[ ! -f "$ascii" || "$ascii" == "distro" ]]; then
         # Error message
-        [[ "$ascii" != "distro" ]] && [[ ! -f "$ascii" ]] && \
+        [[ "$ascii" != "distro" && ! -f "$ascii" ]] && \
             err "Ascii: Ascii file not found, using distro ascii."
 
         # Lowercase the distro name
@@ -1988,8 +2021,9 @@ get_wallpaper() {
                 [[ -z "$de" ]] && get_de
 
                 case "$de" in
-                    "MATE"*) image="$(gsettings get org.mate.background picture-filename)" ;;
-                    *) image="$(gsettings get org.gnome.desktop.background picture-uri)" ;;
+                    "Cinnamon"*) image="$(gsettings get org.cinnamon.desktop.background picture-uri)" ;;
+                    "MATE"*)     image="$(gsettings get org.mate.background picture-filename)" ;;
+                    *)           image="$(gsettings get org.gnome.desktop.background picture-uri)" ;;
                 esac
 
                 # Strip quotes etc from the path.
@@ -2236,7 +2270,7 @@ display_image() {
         ;;
 
         "tycat")
-            tycat "$image"
+            tycat "$image" || to_off "Images: tycat failed to display the image."
         ;;
     esac
 }
@@ -2258,7 +2292,12 @@ to_off() {
 # SCREENSHOT
 
 take_scrot() {
-    $scrot_cmd "${scrot_dir}${scrot_name}"
+    if [[ -d "$scrot_dir" ]]; then
+        $scrot_cmd "${scrot_dir}${scrot_name}"
+    else
+        printf "%s\n" "Screenshot: $scrot_dir doesn't exist. Edit the config file or create the directory to take screenshots."
+    fi
+
     [[ "$scrot_upload" == "on" ]] && scrot_upload
 }
 
@@ -2304,11 +2343,16 @@ info() {
     # $1 is the subtitle
     subtitle="$1"
 
-    # Call the function and update variable
-    "get_${2:-$1}" 2>/dev/null
-    output="${2:-$1}"
+    # Use cache if it exists
+    if [[ -f "${cache_dir}/neofetch/${2}" ]]; then
+        source "${cache_dir}/neofetch/${2}"
+    else
+        # Call the function.
+        "get_${2:-$1}" 2>/dev/null
+    fi
 
-    # Trim whitespace
+    # Update the variable
+    output="${2:-$1}"
     output="$(trim "${!output}")"
 
     # If prin was used in the function, stop here.
@@ -2756,8 +2800,17 @@ bar() {
 }
 
 cache() {
-    mkdir -p "$3/neofetch"
-    printf "%s" "${1/*-}=\"$2\"" > "$3/neofetch/${1/*-}"
+    if [[ "$2" ]]; then
+        mkdir -p "${cache_dir}/neofetch"
+        printf "%s" "${1/*-}=\"$2\"" > "${cache_dir}/neofetch/${1/*-}"
+    fi
+}
+
+get_cache_dir() {
+    case "$os" in
+        "Mac OS X") cache_dir="/Library/Caches" ;;
+        *) cache_dir="/tmp" ;;
+    esac
 }
 
 kde_config_dir() {
@@ -2882,6 +2935,7 @@ usage() { printf "%s" "
                                 in the output.
                                 NOTE: You can supply multiple args. eg.
                                 'neofetch --disable cpu gpu disk shell'
+                                NOTE: The arguments must all be lowercase.
     --os_arch on/off            Hide/Show OS architecture.
     --speed_type type           Change the type of cpu speed to display.
                                 Possible values: current, min, max, bios,
@@ -2894,7 +2948,9 @@ usage() { printf "%s" "
                                 NOTE: 'physical' doesn't work on BSD.
     --cpu_speed on/off          Hide/Show cpu speed.
     --cpu_temp on/off           Hide/Show cpu temperature.
-                                NOTE This only works on linux.
+                                NOTE: This only works on Linux and BSD.
+                                NOTE: For FreeBSD-based systems, you need to enable coretemp
+                                      kernel module.
     --distro_shorthand on/off   Shorten the output of distro (tiny, on, off)
                                 NOTE: This option won't work in Windows (Cygwin)
     --kernel_shorthand on/off   Shorten the output of kernel
@@ -2917,7 +2973,7 @@ usage() { printf "%s" "
     Text Formatting:
     --colors x x x x x x        Changes the text colors in this order:
                                 title, @, underline, subtitle, colon, info
-    --underline on/off          enable/disable the underline.
+    --underline on/off          Enable/Disable the underline.
     --underline_char char       Character to use when underlining title
     --bold on/off               Enable/Disable bold text
 
@@ -3037,7 +3093,10 @@ get_args() {
                     case "$func" in
                         "--disable") continue ;;
                         "-"*) break ;;
-                        *) unset -f "get_$func" ;;
+                        *)
+                            (("$bash_version" >= 4)) && func="${func,,}"
+                            unset -f "get_$func"
+                        ;;
                     esac
                 done
             ;;
@@ -3195,6 +3254,7 @@ main() {
 
     # Print the info
     old_functions
+    get_cache_dir
     print_info 2>/dev/null
 
     # Prompt calculation

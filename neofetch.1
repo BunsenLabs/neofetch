@@ -1,4 +1,4 @@
-.TH NEOFETCH "1" "November 2016" "2.0" "User Commands"
+.TH NEOFETCH "1" "December 2016" "2.0" "User Commands"
 .SH NAME
 neofetch \- simple system information script
 
@@ -18,6 +18,8 @@ Allows you to disable an info line from appearing in the output.
 NOTE: You can supply multiple args. eg.
 .br
 \'neofetch --disable cpu gpu disk shell\'
+.br
+NOTE: The arguments must all be lowercase.
 .TP
 .B \--os_arch 'on/off'
 Hide/Show OS architecture.
@@ -46,7 +48,9 @@ Hide/Show cpu speed.
 .B \--cpu_temp 'on/off'
 Hide/Show cpu temperature.
 .br
-NOTE This only works on linux.
+NOTE: This only works on Linux and BSD.
+.br
+NOTE: For FreeBSD-based systems, you need to enable coretemp kernel module.
 .TP
 .B \--distro_shorthand 'on/off'
 Shorten the output of distro (tiny, on, off)
