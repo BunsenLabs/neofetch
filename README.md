@@ -6,7 +6,7 @@ Neofetch is a CLI system information tool written in BASH. Neofetch displays inf
 
 Neofetch is highly customizable through the use of commandline flags or the user config file. There are over 50 config options to mess around with and there's the `print_info()` function and friends which let you add your own custom info.
 
-Neofetch can be used on any OS that has BASH, it's just a matter of adding support. If your OS/Distro isn't in the list below, feel free to open an issue on the repo and I'll gladly add support. Neofetch currently supports `Linux`, `MacOS`, `iOS`, `BSD`, `Solaris`, `Android`, `Haiku`, `GNU Hurd` and `Windows (Cygwin/Windows 10 Linux subsystem)`. 
+Neofetch can be used on any OS that has BASH, it's just a matter of adding support. If your OS/Distro isn't in the list below, feel free to open an issue on the repo and I'll gladly add support. Neofetch currently supports `Linux`, `MacOS`, `iOS`, `BSD`, `Solaris`, `Android`, `Haiku`, `GNU Hurd` and `Windows (Cygwin/Windows 10 Linux subsystem)`.
 
 For more information:
 
@@ -34,10 +34,12 @@ Neofetch will by default create a config file at `$HOME/.config/neofetch/config`
 
 You can launch the script without a config file by using the flag `--config none` and you can specify a custom config location using `--config path/to/config`.
 
+See this wiki page for the default config: https://github.com/dylanaraps/neofetch/wiki/Config-File
+
 
 ### Customizing what info gets displayed
 
-https://github.com/dylanaraps/fetch/wiki/Customizing-Info
+https://github.com/dylanaraps/neofetch/wiki/Customizing-Info
 
 
 ### Customizing the script using a custom alias
@@ -58,60 +60,18 @@ alias neofetch2="neofetch \
 ```
 
 
-## Frequently Asked Questions
-
-
-### How do I enable screenfetch mode?
-
-Launching the script with `--ascii` or setting `image="ascii"` inside the config file will launch the script in "screenfetch mode". The script will display your distro's ascii next to the info, exactly like screenfetch.
-
-**NOTE:** If you **don't** have an image-mode dependency installed screenfetch mode will be used automatically.
-
-### Why doesn't Neofetch support my wallpaper setter?
-
-It's hard to add support for other wallpaper setters as they don't provide a way of getting the current wallpaper from the cli.
-
-If your wallpaper setter **does** provide a way of getting the current wallpaper or you know where the wallpaper is stored then adding support won't be a problem!
-
-
-## Issues and Workarounds
-
-### getgpu doesn't show my exact video card name
-
-If your `lspci | grep "VGA"` output looks like this:
-
-```
-01:00.0 VGA compatible controller: NVIDIA Corporation Device 1401 (rev a1)
-```
-
-Instead of this:
-
-```
-01:00.0 VGA compatible controller: NVIDIA Corporation GM206 [GeForce GTX 960] (rev a1)
-```
-
-Then you're affected by the issue.
-
-This is caused by your `/usr/share/misc/pci.ids*` files being outdated and you can fix it by running this command as root.
-
-```
-sudo update-pciids
-```
-
-### Neofetch doesn't work correctly with ConEmu.
-
-You need to be using the CYGWIN/Msys connector for Neofetch to work seamlessly with ConEmu.
-
-https://conemu.github.io/en/CygwinMsysConnector.html
-
-
 ## Thanks
 
 Thanks to:
 
+- [Contributors](https://github.com/dylanaraps/neofetch/contributors)
+    - Thanks for making Neofetch better, I really appreciate it.
+- [Packagers](https://github.com/dylanaraps/neofetch/issues/115)
+    - Thanks for maintaining Neofetch packages.
+- Users
+    - Thanks for using my script!
 - [Screenfetch](https://github.com/KittyKatt/screenFetch):
     - I've used some snippets as a base for a few functions in this script.
     - Some of the ascii logos.
 - [ufetch](https://github.com/jschx/ufetch):
     - Tiny ascii logos
-- Everyone else helped out in one way or another. I'd list all of the names but there's just too many of you. :)
