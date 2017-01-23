@@ -1,3 +1,10 @@
+neofetch (3.0-1) jessie-backports; urgency=medium
+
+  * Import recent upstream release
+  * Changelog: https://github.com/dylanaraps/neofetch/releases/tag/3.0
+
+ -- Jens John <dev@2ion.de>  Mon, 23 Jan 2017 12:27:10 +0100
+
 neofetch (2.0.2-1) jessie-backports; urgency=medium
 
   * Import recent upstream release
