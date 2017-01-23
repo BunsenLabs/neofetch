@@ -1,18 +1,22 @@
 # Neofetch
 
-[![Gitter](https://badges.gitter.im/dylanaraps/fetch.svg)](https://gitter.im/dylanaraps/fetch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Build Status](https://travis-ci.org/dylanaraps/neofetch.svg?branch=master)](https://travis-ci.org/dylanaraps/neofetch) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md) [![Latest release](https://img.shields.io/github/release/dylanaraps/neofetch.svg)](https://github.com/dylanaraps/neofetch/releases)
+[![Gitter](https://badges.gitter.im/dylanaraps/fetch.svg)](https://gitter.im/dylanaraps/fetch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Freenode](https://img.shields.io/badge/%23neofetch-%20on%20Freenode-brightgreen.svg)](http://irc.lc/freenode/neofetch)
+[![Build Status](https://travis-ci.org/dylanaraps/neofetch.svg?branch=master)](https://travis-ci.org/dylanaraps/neofetch)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
+[![Latest release](https://img.shields.io/github/release/dylanaraps/neofetch.svg)](https://github.com/dylanaraps/neofetch/releases)
 
-Neofetch is a CLI system information tool written in BASH. Neofetch displays information about your system next to an image, your OS logo, or any ascii file of your choice. The main purpose of neofetch is to be used in screenshots to show other users what OS/Distro you're running, what Theme/Icons you're using and etc.
+Neofetch is a CLI system information tool written in BASH. Neofetch displays information about your system next to an image, your OS logo, or any ascii file of your choice. The main purpose of Neofetch is to be used in screenshots to show other users what OS/Distro you're running, what Theme/Icons you're using and etc.
 
 Neofetch is highly customizable through the use of commandline flags or the user config file. There are over 50 config options to mess around with and there's the `print_info()` function and friends which let you add your own custom info.
 
-Neofetch can be used on any OS that has BASH, it's just a matter of adding support. If your OS/Distro isn't in the list below, feel free to open an issue on the repo and I'll gladly add support. Neofetch currently supports `Linux`, `MacOS`, `iOS`, `BSD`, `Solaris`, `Android`, `Haiku`, `GNU Hurd` and `Windows (Cygwin/Windows 10 Linux subsystem)`.
+Neofetch can be used on any OS that has BASH, it's just a matter of adding support. If your OS/Distro isn't in the list below, feel free to open an issue on the repo and I'll gladly add support. Neofetch currently supports `Linux`, `MacOS`, `iOS`, `BSD`, `Solaris`, `Android`, `Haiku`, `GNU Hurd`, `MINIX`, `AIX`, and `Windows (Cygwin/MSYS2/Windows 10 Linux subsystem)`.
 
 For more information:
 
 **https://github.com/dylanaraps/neofetch/wiki**
 
-![1](https://ipfs.pics/ipfs/QmTtF9Sx8o617QE88GH3Z4yX7mRyi4yS1hsMHyRVmn14vJ)
+![neofetch screenshot](https://u.teknik.io/KlBsD.png)
 
 
 ## Dependencies
@@ -69,9 +73,9 @@ Thanks to:
 - [Packagers](https://github.com/dylanaraps/neofetch/issues/115)
     - Thanks for maintaining Neofetch packages.
 - Users
-    - Thanks for using my script!
+    - Thanks for using Neofetch!
 - [Screenfetch](https://github.com/KittyKatt/screenFetch):
-    - I've used some snippets as a base for a few functions in this script.
+    - We've used some snippets as a base for a few functions in this script.
     - Some of the ascii logos.
 - [ufetch](https://github.com/jschx/ufetch):
     - Tiny ascii logos
