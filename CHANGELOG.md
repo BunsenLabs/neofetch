@@ -1,88 +1,95 @@
-This minor release fixes all of the bugs that were found in the 3.0 release.
-
-Thanks for all of the bug reports and contributions. :)
-
-
 ## Contributors
 
-- **[@SomaUlte](https://github.com/SomaUlte)**
-- **[@jorgegonzalez](https://github.com/jorgegonzalez)**
-- **[@dawidd6](https://github.com/dawidd6)**
 - **[@mstraube](https://github.com/mstraube)**
-- **[@YellowApple](https://github.com/YellowApple)**
-- **[@siiptuo](https://github.com/siiptuo)**
-- **[@Head-on-a-Stick](https://github.com/Head-on-a-Stick)**
-- **[@konimex](https://github.com/konimex)**
+- **[@jorgegonzalez](https://github.com/jorgegonzalez)**
+- **[@ikeydoherty](https://github.com/ikeydoherty)**
+- **[@eliezio](https://github.com/eliezio)**
+- **[@nilesr](https://github.com/nilesr)**
+- **[@dritter](https://github.com/dritter)**
+- **[@@HebaruSan](https://github.com/HebaruSan)**
 
 
 ## Operating System
 
-- Added support for ArchBox Linux.
+- Added support for SliTaz. **[@nilesr](https://github.com/nilesr)**
+- Added support for Nitrux. **[@mstraube](https://github.com/mstraube)**
+- Added support for DesaOS.
+- Added support for MinGW.
 
 
-## General
+## Screenshot
 
-- Fixed output if subtitles are disabled and `prin` is used in an info function.
-- Fixed underlines not working when used with `prin`.
-- Fixed HAIKU install path. **[@YellowApple](https://github.com/YellowApple)**
+The screenshot feature no longer requires any configuration before working. We no longer hardcode `${HOME}/Pictures/neofetch` as the screenshot location. Here's how the `-s` and `-su` flags now function:
 
-
-## Config
-
-- Fixed default config not found.
-- Don't set locale in config file.
+- `neofetch -s` will save a file in the current directory named: `neofetch-$(date +%F-%I-%M-%S-${RANDOM}).png`
+- `neofetch -s test.png` will save a file in the current directory called `test.png`
+- `neofetch -s ~/` will save a file in `~` called `neofetch-$(date +%F-%I-%M-%S-${RANDOM}).png`
+- `neofetch -s ~/test.png` will save a file in `~` called `test.png`.
 
 
-## Info
+## ASCII
 
-**Memory**<br \>
-
-- Changed memory label to `MiB` on OS that output memory in Mebibytes.
-
-**Shell**<br \>
-
-- Fixed a crash when the user has `bash 3` installed.
-
-**Packages**<br \>
-
-- Added support for Chromebrew.
-
-**GPU**<br \>
-
-- [Linux] Display detailed information about Intel GPUs. **[@SomaUlte](https://github.com/SomaUlte)**
-
-**Color Blocks**<br \>
-
-- Fixed issue with `color_blocks="off"` adding an extra newline to the output.
-
-**Song**<br \>
-
-- Don't print `$song` if it's empty and `song_shorthand` is on. **[@mstraube](https://github.com/mstraube)**
-- Fixed `mpd` detection when `mpd` is on a different host. **[@dawidd6](https://github.com/dawidd6)**
-- Use `get_song_dbus` for Audacious. **[@mstraube](https://github.com/mstraube)**
-
-**Terminal Font**<br \>
-
-- [Alacritty] Fixed font detection. **[@siiptuo](https://github.com/siiptuo)**
+- Arch ASCII art now uses lighter colors.
+- Fixed Ubuntu-Studio ASCII setting. **[@@HebaruSan](https://github.com/HebaruSan)**
+- Update Parabola logo. **[@mstraube](https://github.com/mstraube)**
 
 
 ## Images
 
-- [iTerm2] Fixed issue with line-breaks printing spaces over the image. **[@jorgegonzalez](https://github.com/jorgegonzalez)**
-- Fixed issue with images not working in Terminology.
-- Fixed issue when `image_source` was set to `wall`.
-- [w3m-img] Fixed issues with `w3m-img` and `tmux`.
+- Added `libsixel` backend.
+- Added `termpix` backend.
+- Only use a zero width space in the `w3m` backend.
+- Fixed bug causing terminal size to not be found.
+- [iTerm2] Fixed images not appearing inside `tmux`.
 
 
-## Ascii
+## Info
 
-- [Windows 10] Fixed `ascii_distro` not working.
-- Fixed a bug where the backend is `ascii` but the image_source is an image file.
-- Fixed custom ascii files not working.
-- Removed extra backslashes from OpenBSD ascii art. **[@Head-on-a-Stick](https://github.com/Head-on-a-Stick)**
+**Locale**
 
+- Added a new function to display system locale. (Disabled by default)
 
-## Scrot
+**CPU**
 
-- Added message to let users know that a screenshot was taken.
+- Added option to show decimals in CPU speed.
 
+**Terminal Font**
+
+- Added \*experimental\* font detection for iTerm2. **[@dritter](https://github.com/dritter)**
+
+**Window Manager**
+
+- [MacOS] Added support for Kwm. **[@jorgegonzalez](https://github.com/jorgegonzalez)**
+- [MacOS] Added support for Spectacle. **[@jorgegonzalez](https://github.com/jorgegonzalez)**
+- [MacOS] Added support for Amethyst. **[@jorgegonzalez](https://github.com/jorgegonzalez)**
+
+**Battery**
+
+- Added battery support for Bay Trail devices.  **[@mstraube](https://github.com/mstraube)**
+
+**Disk**
+
+- Added new option to only show dir name in subtitle.
+
+**Song**
+
+- Added support for Deepin Music. **[@mstraube](https://github.com/mstraube)**
+- Added support for Tomahawk. **[@mstraube](https://github.com/mstraube)**
+- Fixed Audacious song output when `dbus-send` fails. **[@mstraube](https://github.com/mstraube)**
+
+**Local IP**
+
+- [Linux] Fixed UID showing instead of Local IP on several versions/configs of iproute2.
+
+**Packages**
+
+- [eopkg] Use a faster detection method. **[@ikeydoherty](https://github.com/ikeydoherty)**
+
+**Resolution**
+
+- [macOS] Fixed `screenresolution` not appearing at all on newer versions. **[@eliezio](https://github.com/eliezio)**
+- [Linux] Show decimals.
+
+**GPU**
+
+- [Linux] Hide duplicate GPU lines (Only display 1).
