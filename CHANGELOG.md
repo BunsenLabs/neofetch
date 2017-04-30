@@ -1,20 +1,28 @@
 ## Contributors
 
+- **[@konimex](https://github.com/konimex)**
 - **[@mstraube](https://github.com/mstraube)**
 - **[@jorgegonzalez](https://github.com/jorgegonzalez)**
 - **[@ikeydoherty](https://github.com/ikeydoherty)**
 - **[@eliezio](https://github.com/eliezio)**
 - **[@nilesr](https://github.com/nilesr)**
 - **[@dritter](https://github.com/dritter)**
-- **[@@HebaruSan](https://github.com/HebaruSan)**
+- **[@HebaruSan](https://github.com/HebaruSan)**
+- **[@LER0ever](https://github.com/LER0ever)**
+- **[@obrevenge](https://github.com/obrevenge)**
+- **[@ajjames31](https://github.com/ajjames31)**
+- Eliezio Oliveira
 
 
 ## Operating System
 
+- Added Chrome OS Crouton support. **[@LER0ever](https://github.com/LER0ever)**
 - Added support for SliTaz. **[@nilesr](https://github.com/nilesr)**
 - Added support for Nitrux. **[@mstraube](https://github.com/mstraube)**
 - Added support for DesaOS.
 - Added support for MinGW.
+- Added support for OBRevenge. **[@obrevenge](https://github.com/obrevenge)**
+- Added support for ArchLabs. **[@obrevenge](https://github.com/obrevenge)**
 
 
 ## Screenshot
@@ -31,7 +39,8 @@ The screenshot feature no longer requires any configuration before working. We n
 
 - Arch ASCII art now uses lighter colors.
 - Fixed Ubuntu-Studio ASCII setting. **[@@HebaruSan](https://github.com/HebaruSan)**
-- Update Parabola logo. **[@mstraube](https://github.com/mstraube)**
+- Updated Parabola logo. **[@mstraube](https://github.com/mstraube)**
+- Updated Raspbian ASCII art.
 
 
 ## Images
