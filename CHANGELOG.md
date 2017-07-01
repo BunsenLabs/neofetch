@@ -1,104 +1,76 @@
 ## Contributors
 
+- **[@MatthewCox](https://github.com/MatthewCox)**
+- **[@dawidd6](https://github.com/dawidd6)**
+- **[@erikdubois](https://github.com/erikdubois)**
 - **[@konimex](https://github.com/konimex)**
 - **[@mstraube](https://github.com/mstraube)**
-- **[@jorgegonzalez](https://github.com/jorgegonzalez)**
-- **[@ikeydoherty](https://github.com/ikeydoherty)**
-- **[@eliezio](https://github.com/eliezio)**
-- **[@nilesr](https://github.com/nilesr)**
-- **[@dritter](https://github.com/dritter)**
-- **[@HebaruSan](https://github.com/HebaruSan)**
+- **[@Artoriuz](https://github.com/Artoriuz)**
+- **[@WilsonRU](https://github.com/WilsonRU)**
+- **[@Takeya-Yuki](https://github.com/Takeya-Yuki)**
+- **[@iandrewt](https://github.com/iandrewt)**
 - **[@LER0ever](https://github.com/LER0ever)**
-- **[@obrevenge](https://github.com/obrevenge)**
-- **[@ajjames31](https://github.com/ajjames31)**
-- Eliezio Oliveira
 
 
 ## Operating System
 
-- Added Chrome OS Crouton support. **[@LER0ever](https://github.com/LER0ever)**
-- Added support for SliTaz. **[@nilesr](https://github.com/nilesr)**
-- Added support for Nitrux. **[@mstraube](https://github.com/mstraube)**
-- Added support for DesaOS.
-- Added support for MinGW.
-- Added support for OBRevenge. **[@obrevenge](https://github.com/obrevenge)**
-- Added support for ArchLabs. **[@obrevenge](https://github.com/obrevenge)**
+- Added support for IRIX.
+- Added support for Arch XFerience. **[@mstraube](https://github.com/mstraube)**
+- Added support for CloverOS.
+- Added support for Maui. **[@mstraube](https://github.com/mstraube)**
+- Added support for KS Linux. **[@Takeya-Yuki](https://github.com/Takeya-Yuki)**
 
 
-## Screenshot
+## General
 
-The screenshot feature no longer requires any configuration before working. We no longer hardcode `${HOME}/Pictures/neofetch` as the screenshot location. Here's how the `-s` and `-su` flags now function:
-
-- `neofetch -s` will save a file in the current directory named: `neofetch-$(date +%F-%I-%M-%S-${RANDOM}).png`
-- `neofetch -s test.png` will save a file in the current directory called `test.png`
-- `neofetch -s ~/` will save a file in `~` called `neofetch-$(date +%F-%I-%M-%S-${RANDOM}).png`
-- `neofetch -s ~/test.png` will save a file in `~` called `test.png`.
-
-
-## ASCII
-
-- Arch ASCII art now uses lighter colors.
-- Fixed Ubuntu-Studio ASCII setting. **[@@HebaruSan](https://github.com/HebaruSan)**
-- Updated Parabola logo. **[@mstraube](https://github.com/mstraube)**
-- Updated Raspbian ASCII art.
+- Minimum required BASH version is now 3.2.
+    - (Neofetch has always used 3.2+ features, I've just made it obvious now in the documentation.)
+- Fixed config file not being created on first install.
 
 
 ## Images
 
-- Added `libsixel` backend.
-- Added `termpix` backend.
-- Only use a zero width space in the `w3m` backend.
-- Fixed bug causing terminal size to not be found.
-- [iTerm2] Fixed images not appearing inside `tmux`.
+- [w3m] Added `--loop` flag which makes Neofetch draw the image once per second.
+    - This is a workaround to the images disappearing on resize and workspace switch.
+    - Use Ctrl+C to exit.
+- [w3m] Fixed w3m-img not found on FreeBSD 12. **[@Artoriuz](https://github.com/Artoriuz)**
+
+
+## Ascii
+
+- Added Ubuntu-MATE ascii art.
+- Fixed ArchLabs ascii art.  **[@erikdubois](https://github.com/erikdubois)**
+- Updated GoboLinux ascii art. **[@WilsonRU](https://github.com/WilsonRU)**
+- Fixed `--ascii_distro windows10` not working.
 
 
 ## Info
 
-**Locale**
+**Distro**
 
-- Added a new function to display system locale. (Disabled by default)
+- [Solaris, AIX, Haiku] The machine architecture will now be shown properly instead of machine ID.
 
-**CPU**
+**Terminal Emulator**
 
-- Added option to show decimals in CPU speed.
-
-**Terminal Font**
-
-- Added \*experimental\* font detection for iTerm2. **[@dritter](https://github.com/dritter)**
-
-**Window Manager**
-
-- [MacOS] Added support for Kwm. **[@jorgegonzalez](https://github.com/jorgegonzalez)**
-- [MacOS] Added support for Spectacle. **[@jorgegonzalez](https://github.com/jorgegonzalez)**
-- [MacOS] Added support for Amethyst. **[@jorgegonzalez](https://github.com/jorgegonzalez)**
-
-**Battery**
-
-- Added battery support for Bay Trail devices.  **[@mstraube](https://github.com/mstraube)**
-
-**Disk**
-
-- Added new option to only show dir name in subtitle.
-
-**Song**
-
-- Added support for Deepin Music. **[@mstraube](https://github.com/mstraube)**
-- Added support for Tomahawk. **[@mstraube](https://github.com/mstraube)**
-- Fixed Audacious song output when `dbus-send` fails. **[@mstraube](https://github.com/mstraube)**
-
-**Local IP**
-
-- [Linux] Fixed UID showing instead of Local IP on several versions/configs of iproute2.
-
-**Packages**
-
-- [eopkg] Use a faster detection method. **[@ikeydoherty](https://github.com/ikeydoherty)**
-
-**Resolution**
-
-- [macOS] Fixed `screenresolution` not appearing at all on newer versions. **[@eliezio](https://github.com/eliezio)**
-- [Linux] Show decimals.
+- Added support for Neovim terminal emulator. **[@LER0ever](https://github.com/LER0ever)**
+- Added font support for mate-terminal. **[@mstraube](https://github.com/mstraube)**
+- [Termite] Fix font mismatch. **[@MatthewCox](https://github.com/MatthewCox)**
+- Use `$SSH_TTY` for terminal detection if machine is connected via SSH.
+- Break from loop if PPID can't be accessed/not found.
 
 **GPU**
 
-- [Linux] Hide duplicate GPU lines (Only display 1).
+- [Linux] Fixed GPU sort.
+
+**Song**
+
+- Do not detect ibus\* or indicator\* as player. **[@dawidd6](https://github.com/dawidd6)**
+
+**Model**
+
+- Specify when running on a Hackintosh. **[@LER0ever](https://github.com/LER0ever)**
+
+
+**Memory**
+
+- [FreeBSD]: Fix inaccurate free memory calculation.
